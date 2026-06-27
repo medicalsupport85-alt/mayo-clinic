@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mayo Clinic Patient Experience Prototype</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="site-header">
+ 
+
+        <div class="container nav-wrap">
+            <a class="brand" href="#home" aria-label="Mayo Clinic prototype home">
+                <img class="brand-logo" src="assets/mayo-clinic-logo.svg" alt="Mayo Clinic logo" aria-hidden="true">
+                <span class="brand-text">Mayo Clinic</span>
+            </a>
+
+            <nav class="main-nav" aria-label="Primary navigation">
+                <a href="#specialties">Specialties</a>
+                <a href="#locations">Locations</a>
+                <a href="#billing" data-panel="bill">Pay Bill Online</a>
+                <a class="nav-action" href="#billing" data-panel="appointment">Book Appointment</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="home">
+        <section class="hero-section" aria-labelledby="hero-title">
+            <div class="hero-media" role="img" aria-label="Clinician speaking with a patient in a modern clinic"></div>
+            <div class="container hero-layout">
+                <div class="hero-copy">
+                    <p class="eyebrow">Patient-centered digital experience</p>
+                    <h1 id="hero-title">Book care or pay a bill from one clear, responsive checkout.</h1>
+                    <p class="hero-lede">A Mayo Clinic-inspired prototype for scheduling visits, settling statements, and helping patients move forward with confidence.</p>
+                    <div class="hero-actions">
+                        <a class="primary-button" href="#billing" data-panel="appointment">Book a visit</a>
+                        <a class="secondary-button" href="#specialties">Explore specialties</a>
+                    </div>
+                    <div class="hero-image-grid" aria-label="Patient experience visuals">
+                        <img src="assets/healing-starts-here-MC11REJU-600x800.avif" alt="Clinician greeting a patient" loading="lazy">
+                        <img src="assets/world-class care-MC1XASH-600x800.avif" alt="Medical team working together" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-actions" aria-label="Common patient actions">
+            <div class="container action-grid">
+                <a href="#billing" data-panel="appointment">
+                    <span class="action-icon">+</span>
+                    <strong>Schedule a consultation</strong>
+                    <span>Choose a visit date, confirm the fee, and complete booking.</span>
+                </a>
+                <a href="#billing" data-panel="bill">
+                    <span class="action-icon">$</span>
+                    <strong>Pay your statement</strong>
+                    <span>Enter guarantor details and pay the amount shown on your bill.</span>
+                </a>
+                <a href="#specialties">
+                    <span class="action-icon">?</span>
+                    <strong>Browse specialties</strong>
+                    <span>Find the right care area for your needs quickly.</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="specialties" class="section-band">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">Specialty navigation</p>
+                    <h2>Designed for patients who need answers quickly.</h2>
+                    <p>Healthcare users often arrive with stress, urgency, and unfamiliar language. This interface keeps choices visible, labels plain, and actions predictable.</p>
+                </div>
+
+                <div class="search-panel">
+                    <label for="careSearch">Search care topics</label>
+                    <div class="search-row">
+                        <input id="careSearch" type="search" placeholder="Try cardiology, cancer care, neurology">
+                        <button id="searchButton" type="button">Search</button>
+                    </div>
+                    <p id="searchFeedback" class="search-feedback" aria-live="polite">Popular: cardiology, cancer care, orthopedic surgery</p>
+                </div>
+
+                <div class="specialty-grid">
+                    <article>
+                        <span class="tile-kicker">Specialty</span>
+                        <h3>Cardiology</h3>
+                        <p>Clear triage for symptoms, tests, second opinions, and follow-up scheduling.</p>
+                        <a href="#billing">Request cardiology care</a>
+                    </article>
+                    <article>
+                        <span class="tile-kicker">Program</span>
+                        <h3>Cancer Care</h3>
+                        <p>Supportive pathways for diagnosis, treatment options, travel planning, and records.</p>
+                        <a href="#billing">Start oncology intake</a>
+                    </article>
+                    <article>
+                        <span class="tile-kicker">Service</span>
+                        <h3>Executive Health</h3>
+                        <p>Concierge-style preventive care workflow with itinerary-first communication.</p>
+                        <a href="#billing">Build a visit plan</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="billing" class="estimate-section">
+            <div class="container estimate-layout">
+                <div>
+                    <p class="eyebrow">Appointment and billing flow</p>
+                    <h2>Book a visit or pay a bill from one responsive checkout.</h2>
+                    <p>This awareness demo shows two patient-ready workflows, with a clear booking form for appointments and a separate bill payment form for guarantor payers.</p>
+
+                    <div class="payment-tabs" role="tablist" aria-label="Payment and appointment options">
+                        <button type="button" class="tab-button active" data-panel="appointment" aria-selected="true">Book Appointment</button>
+                        <button type="button" class="tab-button" data-panel="bill" aria-selected="false">Pay Bill Online</button>
+                    </div>
+
+
+                </div>
+
+                <div class="form-panels">
+                    <form id="appointmentForm" class="estimate-form active" autocomplete="off" action="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec" method="post">
+                        <input type="hidden" name="formType" value="appointment">
+                        <div class="payment-header">
+                            <div>
+                                <h3>Secure appointment booking</h3>
+                                <p class="form-note">Use this form to reserve a visit and pay the appointment fee.</p>
+                            </div>
+                            <span class="trust-badge">Secure</span>
+                        </div>
+
+                        <fieldset>
+                            <legend>Appointment details</legend>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="patientName">Patient full name</label>
+                                    <input id="patientName" name="fullName" type="text" placeholder="Jane Doe" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="appointmentDate">Preferred appointment date</label>
+                                    <input id="appointmentDate" name="visitDate" type="date" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="visitReason">Reason for visit</label>
+                                <input id="visitReason" name="visitReason" type="text" placeholder="General consultation" required>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Patient contact</legend>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="patientEmail">Email address</label>
+                                    <input id="patientEmail" name="email" type="email" placeholder="jane.doe@example.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="patientPhone">Phone number</label>
+                                    <input id="patientPhone" name="phone" type="tel" placeholder="(507) 555-0120" required>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="card-fieldset">
+                            <legend>Payment details</legend>
+                            <div class="form-group">
+                                <label for="paymentAmount">Amount to pay</label>
+                                <input id="paymentAmount" name="paymentAmount" type="text" value="$40" readonly aria-describedby="amountHelp">
+                                <p id="amountHelp" class="form-note">The consultation fee is automatically filled after the appointment date is selected.</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardHolderName">Card holder name</label>
+                                <input id="cardHolderName" name="cardHolderName" type="text" placeholder="Jane Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardNumber">Card number</label>
+                                <input id="cardNumber" name="cardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmCardNumber">Re-enter card number</label>
+                                <input id="confirmCardNumber" name="confirmCardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required aria-describedby="cardMatchError">
+                                <p id="cardMatchError" class="field-error" aria-live="polite"></p>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="expiryDate">Expiration date</label>
+                                    <input id="expiryDate" name="expiryDate" type="text" inputmode="numeric" maxlength="5" placeholder="MM/YY" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV</label>
+                                    <input id="cvv" name="cvv" type="password" inputmode="numeric" maxlength="4" placeholder="123" required>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <button id="payButton" class="primary-button full-button" type="submit">Pay Now</button>
+                    </form>
+
+                    <form id="billForm" class="estimate-form" autocomplete="off" action="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec" method="post" hidden>
+                        <div class="payment-header">
+                            <div>
+                                <h3>Secure bill payment</h3>
+                                <p class="form-note">Pay your existing Mayo Clinic invoice with guarantor and statement details.</p>
+                            </div>
+                          
+                        </div>
+                       
+
+                        <fieldset>
+                            <legend>Statement details</legend>
+                            <input type="hidden" name="formType" value="bill">
+                            <div class="form-group">
+                                <label for="guarantorId">Guarantor ID or Visit #</label>
+                                <input id="guarantorId" name="guarantorId" type="text" placeholder="33053 or 123456" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="guarantorName">Guarantor name</label>
+                                <input id="guarantorName" name="guarantorName" type="text" placeholder="Jane Doe" required>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Payment amount</legend>
+                            <div class="form-group">
+                                <label for="billAmount">Amount to pay</label>
+                                <input id="billAmount" name="billAmount" type="text" inputmode="decimal" placeholder="$179.00" required aria-describedby="billAmountHelp">
+                                <p id="billAmountHelp" class="form-note">Enter the amount shown on your Mayo Clinic statement.</p>
+                            </div>
+                      
+                        </fieldset>
+
+                        <fieldset class="card-fieldset">
+                            <legend>Payment card</legend>
+                            <div class="form-group">
+                                <label for="billCardHolderName">Card holder name</label>
+                                <input id="billCardHolderName" name="billCardHolderName" type="text" placeholder="Jane Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="billCardNumber">Card number</label>
+                                <input id="billCardNumber" name="billCardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="billConfirmCardNumber">Re-enter card number</label>
+                                <input id="billConfirmCardNumber" name="billConfirmCardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required aria-describedby="billCardMatchError">
+                                <p id="billCardMatchError" class="field-error" aria-live="polite"></p>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="billExpiryDate">Expiration date</label>
+                                    <input id="billExpiryDate" name="billExpiryDate" type="text" inputmode="numeric" maxlength="5" placeholder="MM/YY" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="billCvv">CVV</label>
+                                    <input id="billCvv" name="billCvv" type="password" inputmode="numeric" maxlength="4" placeholder="123" required>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <button id="billPayButton" class="primary-button full-button" type="submit">Pay Bill</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="locations" class="section-band light">
+            <div class="container location-layout">
+                <div class="section-heading compact">
+                    <p class="eyebrow">Locations</p>
+                    <h2>Learn more about Mayo Clinic locations or choose a specific location.</h2>
+                    <p>Explore our campus destinations with imagery and quick access to care booking.</p>
+                    <a class="secondary-button" href="#locations">Explore all locations</a>
+                </div>
+
+                <div class="location-grid">
+                    <article class="location-card location-arizona">
+                        <a href="#billing">
+                            <span class="location-label">Mayo Clinic in Arizona</span>
+                            <strong>Phoenix & Scottsdale</strong>W
+                        </a>
+                    </article>
+                    <article class="location-card location-florida">
+                        <a href="#billing">
+                            <span class="location-label">Mayo Clinic in Florida</span>
+                            <strong>Jacksonville</strong>
+                        </a>
+                    </article>
+                    <article class="location-card location-minnesota">
+                        <a href="#billing">
+                            <span class="location-label">Mayo Clinic in Minnesota</span>
+                            <strong>Rochester</strong>
+                        </a>
+                    </article>
+                    <article class="location-card location-healthsystem">
+                        <a href="#billing">
+                            <span class="location-label">Mayo Clinic Health System</span>
+                            <strong>Iowa, Minnesota, Wisconsin</strong>
+                        </a>
+                    </article>
+                    <article class="location-card location-london">
+                        <a href="#billing">
+                            <span class="location-label">Mayo Clinic Healthcare</span>
+                            <strong>London, United Kingdom</strong>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="request-care" class="request-section">
+            <div class="container request-layout">
+                <div>
+                    <p class="eyebrow">Patient experience demo</p>
+                    <h2>Built to feel polished and easy to use.</h2>
+                    <p>Clean navigation, clear options, and a dual workflow let patients book visits or pay invoices without confusion.</p>
+                </div>
+                <a class="primary-button" href="#billing" data-panel="appointment">Book Appointment</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span>Mayo Clinic-inspired portfolio prototype</span>
+            <span>Built as a front-end development sample</span>
+        </div>
+    </footer>
+
+    <div id="successModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content" tabindex="-1">
+            <span class="modal-mark failure-mark" aria-hidden="true">!</span>
+            <h2 id="modalTitle">Payment Failed</h2>
+            <p id="modalMessage">We could not process your request at this time.</p>
+            <div class="support-callout">
+                <span>Patient support</span>
+                <strong>+1 507 555 0170</strong>
+                <a class="primary-button full-button" id="supportCall" href="tel:+15075550170">Call Support</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
