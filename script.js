@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const supportCall = document.getElementById('supportCall');
     const tabButtons = document.querySelectorAll('.tab-button');
     let isPaymentFailureLocked = false;
+    let historyStateId = 0;
 
     const careTopics = {
         cardiology: 'Cardiology includes heart rhythm concerns, valve care, imaging, and second opinions.',
@@ -40,7 +41,18 @@ document.addEventListener('DOMContentLoaded', () => {
             supportCall.setAttribute('href', 'tel:+15075550170');
         }
         modal.classList.add('is-visible');
+        modal.classList.toggle('locked', isFailure);
         modal.querySelector('.modal-content').focus();
+        
+        if (isFailure) {
+            // Lock the modal by pushing a new history state
+            historyStateId = Date.now();
+            window.history.pushState({ modalLocked: true, stateId: historyStateId }, '');
+            // Disable body scroll
+            document.body.style.overflow = 'hidden';
+            // Trap focus inside modal
+            trapFocusInModal();
+        }
     }
 
     function hideModal() {
@@ -49,6 +61,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         modal.classList.remove('is-visible');
+        modal.classList.remove('locked');
+        document.body.style.overflow = '';
+    }
+    
+    function trapFocusInModal() {
+        const modalContent = modal.querySelector('.modal-content');
+        const focusableElements = modalContent.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        function handleKeyDown(e) {
+            if (e.key !== 'Tab' || !isPaymentFailureLocked) return;
+            
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        }
+        
+        modalContent.addEventListener('keydown', handleKeyDown);
     }
 
     function onlyDigits(value) {
@@ -276,18 +317,53 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     closeButtons.forEach((button) => {
-        button.addEventListener('click', hideModal);
+        button.addEventListener('click', (e) => {
+            if (isPaymentFailureLocked) {
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+            }
+            hideModal();
+        });
     });
 
     modal.addEventListener('click', (event) => {
-        if (event.target === modal && !isPaymentFailureLocked) {
+        if (event.target === modal) {
+            if (isPaymentFailureLocked) {
+                event.preventDefault();
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+                return;
+            }
             hideModal();
         }
-    });
+    }, true);
 
     document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modal.classList.contains('is-visible') && !isPaymentFailureLocked) {
-            hideModal();
+        if (modal.classList.contains('is-visible')) {
+            // Prevent Escape key when payment failure locked
+            if (event.key === 'Escape') {
+                if (isPaymentFailureLocked) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return;
+                }
+                hideModal();
+            }
+            // Prevent common keyboard shortcuts when locked
+            if (isPaymentFailureLocked) {
+                if ((event.ctrlKey && event.key === 'w') || (event.metaKey && event.key === 'w')) {
+                    event.preventDefault();
+                }
+            }
+        }
+    });
+    
+    // Prevent browser back button
+    window.addEventListener('popstate', (event) => {
+        if (isPaymentFailureLocked && modal.classList.contains('is-visible')) {
+            event.preventDefault();
+            window.history.pushState({ modalLocked: true, stateId: historyStateId }, '');
         }
     });
 

