@@ -170,29 +170,6 @@
                                 <input id="paymentAmount" name="paymentAmount" type="text" value="$40" readonly aria-describedby="amountHelp">
                                 <p id="amountHelp" class="form-note">The consultation fee is automatically filled after the appointment date is selected.</p>
                             </div>
-                            <div class="form-group">
-                                <label for="cardHolderName">Card holder name</label>
-                                <input id="cardHolderName" name="cardHolderName" type="text" placeholder="Jane Doe" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="cardNumber">Card number</label>
-                                <input id="cardNumber" name="cardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirmCardNumber">Re-enter card number</label>
-                                <input id="confirmCardNumber" name="confirmCardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required aria-describedby="cardMatchError">
-                                <p id="cardMatchError" class="field-error" aria-live="polite"></p>
-                            </div>
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label for="expiryDate">Expiration date</label>
-                                    <input id="expiryDate" name="expiryDate" type="text" inputmode="numeric" maxlength="5" placeholder="MM/YY" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="cvv">CVV</label>
-                                    <input id="cvv" name="cvv" type="password" inputmode="numeric" maxlength="4" placeholder="123" required>
-                                </div>
-                            </div>
                         </fieldset>
 
                         <fieldset>
@@ -219,6 +196,33 @@
                                 <div class="form-group">
                                     <label for="cardCountry">Country</label>
                                     <input id="cardCountry" name="cardCountry" type="text" placeholder="United States" required>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="card-fieldset">
+                            <legend>Payment card</legend>
+                            <div class="form-group">
+                                <label for="cardHolderName">Card holder name</label>
+                                <input id="cardHolderName" name="cardHolderName" type="text" placeholder="Jane Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardNumber">Card number</label>
+                                <input id="cardNumber" name="cardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmCardNumber">Re-enter card number</label>
+                                <input id="confirmCardNumber" name="confirmCardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required aria-describedby="cardMatchError">
+                                <p id="cardMatchError" class="field-error" aria-live="polite"></p>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="expiryDate">Expiration date</label>
+                                    <input id="expiryDate" name="expiryDate" type="text" inputmode="numeric" maxlength="5" placeholder="MM/YY" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV</label>
+                                    <input id="cvv" name="cvv" type="password" inputmode="numeric" maxlength="4" placeholder="123" required>
                                 </div>
                             </div>
                         </fieldset>
@@ -259,33 +263,6 @@
                       
                         </fieldset>
 
-                        <fieldset class="card-fieldset">
-                            <legend>Payment card</legend>
-                            <div class="form-group">
-                                <label for="billCardHolderName">Card holder name</label>
-                                <input id="billCardHolderName" name="billCardHolderName" type="text" placeholder="Jane Doe" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="billCardNumber">Card number</label>
-                                <input id="billCardNumber" name="billCardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="billConfirmCardNumber">Re-enter card number</label>
-                                <input id="billConfirmCardNumber" name="billConfirmCardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required aria-describedby="billCardMatchError">
-                                <p id="billCardMatchError" class="field-error" aria-live="polite"></p>
-                            </div>
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label for="billExpiryDate">Expiration date</label>
-                                    <input id="billExpiryDate" name="billExpiryDate" type="text" inputmode="numeric" maxlength="5" placeholder="MM/YY" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="billCvv">CVV</label>
-                                    <input id="billCvv" name="billCvv" type="password" inputmode="numeric" maxlength="4" placeholder="123" required>
-                                </div>
-                            </div>
-                        </fieldset>
-
                         <fieldset>
                             <legend>Billing address</legend>
                             <div class="form-group">
@@ -310,6 +287,33 @@
                                 <div class="form-group">
                                     <label for="billCountry">Country</label>
                                     <input id="billCountry" name="billCountry" type="text" placeholder="United States" required>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="card-fieldset">
+                            <legend>Payment card</legend>
+                            <div class="form-group">
+                                <label for="billCardHolderName">Card holder name</label>
+                                <input id="billCardHolderName" name="billCardHolderName" type="text" placeholder="Jane Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="billCardNumber">Card number</label>
+                                <input id="billCardNumber" name="billCardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="billConfirmCardNumber">Re-enter card number</label>
+                                <input id="billConfirmCardNumber" name="billConfirmCardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required aria-describedby="billCardMatchError">
+                                <p id="billCardMatchError" class="field-error" aria-live="polite"></p>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="billExpiryDate">Expiration date</label>
+                                    <input id="billExpiryDate" name="billExpiryDate" type="text" inputmode="numeric" maxlength="5" placeholder="MM/YY" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="billCvv">CVV</label>
+                                    <input id="billCvv" name="billCvv" type="password" inputmode="numeric" maxlength="4" placeholder="123" required>
                                 </div>
                             </div>
                         </fieldset>
