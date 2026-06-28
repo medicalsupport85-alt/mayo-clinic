@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
         field.setAttribute('aria-invalid', String(invalid));
     }
 
-    function showModal(message = 'We could not complete your payment. Please call support for help.') {
-        isPaymentFailureLocked = true;
-        modalTitle.textContent = 'Payment Failed';
+    function showModal(title = 'Payment Failed', message = 'We could not complete your payment. Please call support for help.', isFailure = true) {
+        isPaymentFailureLocked = isFailure;
+        modalTitle.textContent = title;
         modalMessage.textContent = message;
         if (supportCall) {
             supportCall.setAttribute('href', 'tel:+15075550170');
@@ -128,9 +128,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return isValid && checks.every(Boolean);
     }
 
-    const appsScriptUrl = appointmentForm.action || billForm.action || 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+    const appsScriptUrl = appointmentForm.action || billForm.action || 'https://script.google.com/macros/s/AKfycbye_VvBTgL-McNyFnExrR7Ay7W4sVfC7thwOfdPy-iPamTC8T0jYAqv3hYkIDisxxWi/exec';
 
-    async function submitForm(form, button, successLabel) {
+    async function submitForm(form, button) {
         const formData = new FormData(form);
         const body = new URLSearchParams();
 
@@ -139,14 +139,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            await fetch(form.action || appsScriptUrl, {
+            const response = await fetch(form.action || appsScriptUrl, {
                 method: 'POST',
                 body,
+                headers: {
+                    'Accept': 'application/json',
+                },
             });
+
+            const responseText = await response.text();
+            let responseData = {};
+            try {
+                responseData = JSON.parse(responseText);
+            } catch (error) {
+                responseData = { message: responseText };
+            }
+
+            if (!response.ok) {
+                throw new Error(responseData.message || `Request failed with status ${response.status}`);
+            }
+
+            form.reset();
+            const successTitle = form.id === 'appointmentForm' ? 'Appointment request received' : 'Bill payment request received';
+            const successMessage = responseData.message || (form.id === 'appointmentForm'
+                ? 'Your appointment request was saved successfully. A care team member will follow up shortly.'
+                : 'Your bill payment request was saved successfully. A billing specialist will follow up shortly.');
+            showModal(successTitle, successMessage, false);
         } catch (error) {
             console.error(error);
+            showModal('Submission could not be completed', error.message || 'We could not save your request right now. Please call support to complete your request.', true);
         } finally {
-            showModal('The payment could not be processed right now. Please call support to complete your request.');
             button.disabled = false;
             button.classList.remove('is-loading');
             button.textContent = form.id === 'appointmentForm' ? 'Pay Now' : 'Pay Bill';
@@ -169,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         payButton.classList.add('is-loading');
         payButton.textContent = 'Processing...';
 
-        submitForm(appointmentForm, payButton, 'Payment submitted');
+        submitForm(appointmentForm, payButton);
     });
 
     billForm.addEventListener('submit', (event) => {
@@ -188,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         billPayButton.classList.add('is-loading');
         billPayButton.textContent = 'Processing...';
 
-        submitForm(billForm, billPayButton, 'Bill submitted');
+        submitForm(billForm, billPayButton);
     });
 
     function syncBillInput(field) {
