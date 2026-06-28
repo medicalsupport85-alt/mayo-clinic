@@ -867,44 +867,9 @@ h3 {
     background: var(--soft);
 }
 
-/* Locked modal styles - prevents all interaction outside modal */
-.modal.locked {
-    backdrop-filter: blur(4px);
-    pointer-events: auto !important;
-}
-
-.modal.locked::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 39;
-    background: transparent;
-    pointer-events: auto;
-}
-
-.modal.locked .modal-content {
-    pointer-events: auto;
-    animation: lockedPulse 0.3s ease-out;
-}
-
-@keyframes lockedPulse {
-    0% {
-        transform: scale(0.98);
-        opacity: 0.9;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-/* Prevent interaction with page elements when modal is locked */
-.modal.locked ~ * {
-    pointer-events: none;
-}
-
-body:has(.modal.locked.is-visible) {
-    overflow: hidden !important;
+/* Modal is non-closable by clicking outside or pressing Escape for all forms */
+body:has(.modal.is-visible) {
+    overflow: hidden;
 }
 
 @media (max-width: 1080px) {

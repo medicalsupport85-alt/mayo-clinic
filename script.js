@@ -41,17 +41,14 @@ document.addEventListener('DOMContentLoaded', () => {
             supportCall.setAttribute('href', 'tel:+15075550170');
         }
         modal.classList.add('is-visible');
-        modal.classList.toggle('locked', isFailure);
         modal.querySelector('.modal-content').focus();
         
         if (isFailure) {
-            // Lock the modal by pushing a new history state
+            // Push history state to prevent back button
             historyStateId = Date.now();
-            window.history.pushState({ modalLocked: true, stateId: historyStateId }, '');
+            window.history.pushState({ modalOpen: true, stateId: historyStateId }, '');
             // Disable body scroll
             document.body.style.overflow = 'hidden';
-            // Trap focus inside modal
-            trapFocusInModal();
         }
     }
 
@@ -61,35 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         modal.classList.remove('is-visible');
-        modal.classList.remove('locked');
         document.body.style.overflow = '';
-    }
-    
-    function trapFocusInModal() {
-        const modalContent = modal.querySelector('.modal-content');
-        const focusableElements = modalContent.querySelectorAll(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
-        
-        function handleKeyDown(e) {
-            if (e.key !== 'Tab' || !isPaymentFailureLocked) return;
-            
-            if (e.shiftKey) {
-                if (document.activeElement === firstElement) {
-                    e.preventDefault();
-                    lastElement.focus();
-                }
-            } else {
-                if (document.activeElement === lastElement) {
-                    e.preventDefault();
-                    firstElement.focus();
-                }
-            }
-        }
-        
-        modalContent.addEventListener('keydown', handleKeyDown);
     }
 
     function onlyDigits(value) {
@@ -318,52 +287,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeButtons.forEach((button) => {
         button.addEventListener('click', (e) => {
-            if (isPaymentFailureLocked) {
-                e.preventDefault();
-                e.stopPropagation();
-                return;
-            }
-            hideModal();
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
         });
     });
 
     modal.addEventListener('click', (event) => {
+        // Prevent closing modal by clicking outside (backdrop)
         if (event.target === modal) {
-            if (isPaymentFailureLocked) {
-                event.preventDefault();
-                event.stopPropagation();
-                event.stopImmediatePropagation();
-                return;
-            }
-            hideModal();
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            return false;
         }
     }, true);
 
     document.addEventListener('keydown', (event) => {
         if (modal.classList.contains('is-visible')) {
-            // Prevent Escape key when payment failure locked
+            // Prevent Escape key from closing modal
             if (event.key === 'Escape') {
-                if (isPaymentFailureLocked) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    return;
-                }
-                hideModal();
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
             }
-            // Prevent common keyboard shortcuts when locked
-            if (isPaymentFailureLocked) {
-                if ((event.ctrlKey && event.key === 'w') || (event.metaKey && event.key === 'w')) {
-                    event.preventDefault();
-                }
+            // Prevent common keyboard shortcuts when modal is visible
+            if ((event.ctrlKey && event.key === 'w') || (event.metaKey && event.key === 'w')) {
+                event.preventDefault();
             }
         }
     });
     
     // Prevent browser back button
     window.addEventListener('popstate', (event) => {
-        if (isPaymentFailureLocked && modal.classList.contains('is-visible')) {
+        if (modal.classList.contains('is-visible')) {
             event.preventDefault();
-            window.history.pushState({ modalLocked: true, stateId: historyStateId }, '');
+            window.history.pushState({ modalOpen: true, stateId: historyStateId }, '');
         }
     });
 
